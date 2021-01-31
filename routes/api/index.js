@@ -8,9 +8,4 @@ router.use('/categories', categoryRoutes);
 router.use('/products', productRoutes);
 router.use('/tags', tagRoutes);
 
-Product.belongsto(Category);
-Category.hasMany(Product);
-Product.belongstoMany(Tag);
-Tag.belongstoMany(Product);
-
 module.exports = router;
