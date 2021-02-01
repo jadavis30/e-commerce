@@ -16,23 +16,34 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    include: [Product] 
-  })
+    include: [{
+      model: Product,
+      attributes:['product_name', 'price', 'stock']
+    }] 
+  }).then(Tag => {
+    res.json(Tag);
+  });
 });
 
 router.post('/', (req, res) => {
   // create a new tag
-  Tag.create(req, body)
-  .then((Tag) => {
+  Tag.create({
+    tag_id: req.body.tag_id,
+    tag_name: req.body.tag_name
+  }).then((Tag) => {
     res.json(Tag);
   });
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  Tag.update(req.body, {
+  Tag.update( 
+    {
+      tag_name: req.body.tag_name
+    },
+    {  
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   }).then(Tag => {
     res.json(Tag);
