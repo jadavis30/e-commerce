@@ -33,7 +33,7 @@ router.get('/:id', (req, res) => {
   // find a single product by its `id`
     Product.findOne({
       where: {
-        id: req.params.product_id
+        id: req.params.id
       },
       attributes: [
         'id',
@@ -60,11 +60,10 @@ router.post('/', (req, res) => {
   Product.create({
     product_id: req.body.product_id,
     product_name: req.body.product_name,
-    product_price: req.body.product_price,
-    product_stock: req.body.product_stock,
-    category_id: req.body.category_id
+    price: req.body.price,
+    stock: req.body.stock,
   }) 
-    .then((product) => {
+    .then((Product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
@@ -76,7 +75,7 @@ router.post('/', (req, res) => {
         return ProductTag.bulkCreate(productTagIdArr);
       }
       // if no product tags, just respond
-      res.status(200).json(product);
+      res.status(200).json(Product);
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
     .catch((err) => {

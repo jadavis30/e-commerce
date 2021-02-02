@@ -10,7 +10,7 @@ class Product extends Model {}
 Product.init(
   {
     id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull:false,
       primaryKey: true,
       autoIncrement:true
@@ -20,7 +20,7 @@ Product.init(
       allowNull: false,
     },
     price: {
-      type:DataTypes.DECIMAL,Number,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         is: DECIMAL
