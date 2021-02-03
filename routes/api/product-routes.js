@@ -57,13 +57,11 @@ router.get('/:id', (req, res) => {
 
 // create new product
 router.post('/', (req, res) => {
-  Product.create({
-    product_id: req.body.product_id,
-    product_name: req.body.product_name,
-    price: req.body.price,
-    stock: req.body.stock,
-  }) 
+
+  Product.create(req.body) 
     .then((Product) => {
+      //when creating product in Insomnia, ensure you add "tagIds": [] to successfully add a product!
+      console.log(req.body.tagIds);
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
@@ -73,7 +71,7 @@ router.post('/', (req, res) => {
           };
         });
         return ProductTag.bulkCreate(productTagIdArr);
-      }
+    }
       // if no product tags, just respond
       res.status(200).json(Product);
     })
@@ -138,3 +136,10 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+/*{
+  product_id: req.body.product_id,
+  product_name: req.body.product_name,
+  price: req.body.price,
+  stock: req.body.stock,
+}*/
